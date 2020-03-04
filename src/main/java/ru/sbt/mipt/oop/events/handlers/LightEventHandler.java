@@ -26,7 +26,7 @@ public class LightEventHandler implements EventHandler {
         }
     }
 
-    private void turnOffLights(String objectId) {
+    private void turnOnLights(String objectId) {
         for (Room room : smartHome.getRooms()) {
             Light light = (Light) room.getSmartObjectByIdAndType(objectId, LIGHT);
             if (light != null) {
@@ -36,7 +36,7 @@ public class LightEventHandler implements EventHandler {
         }
     }
 
-    private void turnOnLights(String objectId) {
+    private void turnOffLights(String objectId) {
         for (Room room : smartHome.getRooms()) {
             Light light = (Light) room.getSmartObjectByIdAndType(objectId, LIGHT);
             if (light != null) {

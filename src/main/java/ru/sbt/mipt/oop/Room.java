@@ -1,7 +1,5 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.objects.Door;
-import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.objects.SmartObject;
 import ru.sbt.mipt.oop.objects.SmartObjectType;
 
@@ -10,8 +8,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ru.sbt.mipt.oop.objects.SmartObjectType.DOOR;
-import static ru.sbt.mipt.oop.objects.SmartObjectType.LIGHT;
 
 public class Room {
     private Map<SmartObjectType, Collection<SmartObject>> smartObjects;

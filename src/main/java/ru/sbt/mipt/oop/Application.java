@@ -21,6 +21,7 @@ public class Application {
                 new DoorEventHandler(smartHome),
                 new LightEventHandler(smartHome)
         ));
+
         SensorEvent event = getNextSensorEvent();
         while (event != null) {
             eventProcessor.processEvent(event);

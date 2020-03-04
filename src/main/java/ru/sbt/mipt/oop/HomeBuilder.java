@@ -1,19 +1,11 @@
 package ru.sbt.mipt.oop;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import ru.sbt.mipt.oop.objects.Door;
 import ru.sbt.mipt.oop.objects.Light;
-import ru.sbt.mipt.oop.objects.SmartObject;
 import ru.sbt.mipt.oop.serialization.SmartHomeJsonSerializer;
 import ru.sbt.mipt.oop.serialization.SmartHomeSerializer;
-import ru.sbt.mipt.oop.serialization.SmartObjectInterfaceAdaptor;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class HomeBuilder {

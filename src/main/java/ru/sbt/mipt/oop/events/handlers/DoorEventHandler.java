@@ -1,8 +1,7 @@
 package ru.sbt.mipt.oop.events.handlers;
 
-import ru.sbt.mipt.oop.*;
-import ru.sbt.mipt.oop.commands.CommandType;
-import ru.sbt.mipt.oop.commands.SensorCommand;
+import ru.sbt.mipt.oop.Room;
+import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.events.SensorEvent;
 import ru.sbt.mipt.oop.objects.Door;
 import ru.sbt.mipt.oop.objects.Light;
@@ -57,14 +56,8 @@ public class DoorEventHandler implements EventHandler {
         for (Room homeRoom : smartHome.getRooms()) {
             for (SmartObject smartObject : homeRoom.getAllSmartObjectsByType(LIGHT)) {
                 Light light = (Light) smartObject;
-                light.setOn(false);
-                SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
-                sendCommand(command);
+                light.turnOff();
             }
         }
-    }
-
-    private static void sendCommand(SensorCommand command) {
-        System.out.println("Pretent we're sending command " + command);
     }
 }
