@@ -1,6 +1,8 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.objects;
 
-public class Light {
+import static ru.sbt.mipt.oop.objects.SmartObjectType.LIGHT;
+
+public class Light implements SmartObject {
     private boolean isOn;
     private final String id;
 
@@ -15,6 +17,11 @@ public class Light {
 
     public String getId() {
         return id;
+    }
+
+    @Override
+    public SmartObjectType getObjectType() {
+        return LIGHT;
     }
 
     public void setOn(boolean on) {
