@@ -5,12 +5,11 @@ import ru.sbt.mipt.oop.objects.Light;
 import ru.sbt.mipt.oop.serialization.SmartHomeJsonSerializer;
 import ru.sbt.mipt.oop.serialization.SmartHomeSerializer;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 public class HomeBuilder {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Room kitchen = new Room(Arrays.asList(
                 new Light("1", false), new Light("2", true),
                 new Door(false, "1")
