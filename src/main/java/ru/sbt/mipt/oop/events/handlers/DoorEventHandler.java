@@ -31,13 +31,10 @@ public class DoorEventHandler implements EventHandler {
 
     private void closeDoors(String objectId) {
         for (Room room : smartHome.getRooms()) {
-            Door door= (Door)room.getSmartObjectByIdAndType(objectId, DOOR);
+            Door door= (Door) room.getSmartObjectByIdAndType(objectId, DOOR);
             if (door != null) {
                 door.setOpen(false);
                 System.out.println("Door " + door.getId() + " in room " + room.getName() + " was closed.");
-                if (room.getName().equals("hall")) {
-                    turnOffAllLights();
-                }
             }
         }
     }
@@ -48,15 +45,6 @@ public class DoorEventHandler implements EventHandler {
             if (door != null) {
                 door.setOpen(true);
                 System.out.println("Door " + door.getId() + " in room " + room.getName() + " was opened.");
-            }
-        }
-    }
-
-    private void turnOffAllLights() {
-        for (Room homeRoom : smartHome.getRooms()) {
-            for (SmartObject smartObject : homeRoom.getAllSmartObjectsByType(LIGHT)) {
-                Light light = (Light) smartObject;
-                light.turnOff();
             }
         }
     }
