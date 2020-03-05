@@ -18,17 +18,14 @@ public class Application {
         SmartHomeDeserializer deserializer = new SmartHomeJsonDeserializer("output.js");
         SmartHome smartHome = deserializer.deserialize();
 
+        EventProducer eventProducer = new RandomEventProducer();
         EventProcessor eventProcessor = new EventProcessor(Arrays.asList(
                 new DoorEventHandler(smartHome),
                 new LightEventHandler(smartHome),
                 new CloseHallDoorEventHandler(smartHome)
-        ));
+        ), eventProducer);
 
-        EventProducer eventProducer = new RandomEventProducer();
-        SensorEvent event = eventProducer.getNextSensorEvent();
-        while (event != null) {
-            eventProcessor.processEvent(event);
-            event = eventProducer.getNextSensorEvent();
-        }
+        eventProcessor.startProcessing();
     }
+
 }
