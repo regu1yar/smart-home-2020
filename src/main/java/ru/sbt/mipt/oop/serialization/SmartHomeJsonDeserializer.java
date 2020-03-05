@@ -26,7 +26,7 @@ public class SmartHomeJsonDeserializer implements SmartHomeDeserializer {
 
     @Override
     public SmartHome deserialize() {
-        String json = null;
+        String json;
         try {
             json = new String(Files.readAllBytes(Paths.get(source)));
         } catch (IOException e) {
