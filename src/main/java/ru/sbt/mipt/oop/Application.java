@@ -5,8 +5,8 @@ import ru.sbt.mipt.oop.events.SensorEvent;
 import ru.sbt.mipt.oop.events.SensorEventType;
 import ru.sbt.mipt.oop.events.handlers.DoorEventHandler;
 import ru.sbt.mipt.oop.events.handlers.LightEventHandler;
-import ru.sbt.mipt.oop.serialization.SmartHomeJsonSerializer;
-import ru.sbt.mipt.oop.serialization.SmartHomeSerializer;
+import ru.sbt.mipt.oop.serialization.SmartHomeDeserializer;
+import ru.sbt.mipt.oop.serialization.SmartHomeJsonDeserializer;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -14,8 +14,8 @@ import java.util.Arrays;
 public class Application {
 
     public static void main(String... args) throws IOException {
-        SmartHomeSerializer serializer = new SmartHomeJsonSerializer();
-        SmartHome smartHome = serializer.deserialize("output.js");
+        SmartHomeDeserializer deserializer = new SmartHomeJsonDeserializer("output.js");
+        SmartHome smartHome = deserializer.deserialize();
 
         EventProcessor eventProcessor = new EventProcessor(Arrays.asList(
                 new DoorEventHandler(smartHome),

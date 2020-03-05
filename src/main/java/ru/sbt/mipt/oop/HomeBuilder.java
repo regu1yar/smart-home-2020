@@ -29,8 +29,8 @@ public class HomeBuilder {
         ), "hall");
         SmartHome smartHome = new SmartHome(Arrays.asList(kitchen, bathroom, bedroom, hall));
 
-        SmartHomeSerializer serializer = new SmartHomeJsonSerializer();
-        serializer.serialize(smartHome, "output.js");
+        SmartHomeSerializer serializer = new SmartHomeJsonSerializer("output.js");
+        serializer.serialize(smartHome);
     }
 
 }
