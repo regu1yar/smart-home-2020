@@ -1,7 +1,6 @@
 package ru.sbt.mipt.oop;
 
 import ru.sbt.mipt.oop.events.EventProcessor;
-import ru.sbt.mipt.oop.events.SensorEvent;
 import ru.sbt.mipt.oop.events.handlers.CloseHallDoorEventHandler;
 import ru.sbt.mipt.oop.events.handlers.DoorEventHandler;
 import ru.sbt.mipt.oop.events.handlers.LightEventHandler;
