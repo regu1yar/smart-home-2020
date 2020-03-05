@@ -4,11 +4,8 @@ import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.events.SensorEvent;
 import ru.sbt.mipt.oop.objects.Door;
-import ru.sbt.mipt.oop.objects.Light;
-import ru.sbt.mipt.oop.objects.SmartObject;
 
 import static ru.sbt.mipt.oop.objects.SmartObjectType.DOOR;
-import static ru.sbt.mipt.oop.objects.SmartObjectType.LIGHT;
 
 public class DoorEventHandler implements EventHandler {
     private final SmartHome smartHome;
