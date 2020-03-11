@@ -1,47 +1,47 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.objects.Door;
-import ru.sbt.mipt.oop.objects.Light;
+import ru.sbt.mipt.oop.objects.SmartObject;
+import ru.sbt.mipt.oop.objects.SmartObjectType;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Room {
-    private Collection<Light> lights;
-    private Collection<Door> doors;
+    private Map<SmartObjectType, Collection<SmartObject>> smartObjects;
     private String name;
 
-    public Room(Collection<Light> lights, Collection<Door> doors, String name) {
-        this.lights = lights;
-        this.doors = doors;
+    public Room(Collection<SmartObject> smartObjects, String name) {
+        this.smartObjects = new HashMap<>();
+        for (SmartObject smartObject : smartObjects) {
+            if (!this.smartObjects.containsKey(smartObject.getObjectType())) {
+                this.smartObjects.put(smartObject.getObjectType(), new ArrayList<>());
+            }
+
+            this.smartObjects.get(smartObject.getObjectType()).add(smartObject);
+        }
+
         this.name = name;
     }
 
-    public Collection<Light> getLights() {
-        return lights;
-    }
+    public SmartObject getSmartObjectByIdAndType(String id, SmartObjectType objectType) {
+        if (!smartObjects.containsKey(objectType)) {
+            return null;
+        }
 
-    public Light getLightById(String id) {
-        for (Light light : lights) {
-            if (light.getId().equals(id)) {
-                return light;
+        for (SmartObject smartObject : smartObjects.get(objectType)) {
+            if (smartObject.getId().equals(id)) {
+                return smartObject;
             }
         }
 
         return null;
     }
 
-    public Collection<Door> getDoors() {
-        return doors;
-    }
-
-    public Door getDoorById(String id) {
-        for (Door door : doors) {
-            if (door.getId().equals(id)) {
-                return door;
-            }
-        }
-
-        return null;
+    public Collection<SmartObject> getAllSmartObjectsByType(SmartObjectType objectType) {
+        return smartObjects.get(objectType);
     }
 
     public String getName() {
