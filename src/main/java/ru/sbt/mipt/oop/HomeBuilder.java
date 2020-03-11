@@ -1,7 +1,7 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.objects.Door;
-import ru.sbt.mipt.oop.objects.Light;
+import ru.sbt.mipt.oop.components.Door;
+import ru.sbt.mipt.oop.components.Light;
 import ru.sbt.mipt.oop.serialization.SmartHomeJsonSerializer;
 import ru.sbt.mipt.oop.serialization.SmartHomeSerializer;
 

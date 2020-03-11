@@ -1,11 +1,12 @@
 package ru.sbt.mipt.oop;
 
-import ru.sbt.mipt.oop.objects.Door;
-import ru.sbt.mipt.oop.objects.Light;
+import ru.sbt.mipt.oop.actions.Action;
+import ru.sbt.mipt.oop.components.Door;
+import ru.sbt.mipt.oop.components.Light;
 
 import java.util.Collection;
 
-public class Room {
+public class Room implements Actionable {
     private Collection<Light> lights;
     private Collection<Door> doors;
     private String name;
@@ -16,11 +17,7 @@ public class Room {
         this.name = name;
     }
 
-    public Collection<Light> getLights() {
-        return lights;
-    }
-
-    public Light getLightById(String id) {
+    private Light getLightById(String id) {
         for (Light light : lights) {
             if (light.getId().equals(id)) {
                 return light;
@@ -30,11 +27,7 @@ public class Room {
         return null;
     }
 
-    public Collection<Door> getDoors() {
-        return doors;
-    }
-
-    public Door getDoorById(String id) {
+    private Door getDoorById(String id) {
         for (Door door : doors) {
             if (door.getId().equals(id)) {
                 return door;
@@ -46,5 +39,16 @@ public class Room {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void execute(Action action) {
+        for (Light light : lights) {
+            light.execute(action);
+        }
+
+        for (Door door : doors) {
+            door.execute(action);
+        }
     }
 }
