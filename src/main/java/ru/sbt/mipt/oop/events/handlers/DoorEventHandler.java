@@ -5,8 +5,6 @@ import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.events.SensorEvent;
 import ru.sbt.mipt.oop.objects.Door;
 
-import static ru.sbt.mipt.oop.objects.SmartObjectType.DOOR;
-
 public class DoorEventHandler implements EventHandler {
     private final SmartHome smartHome;
 
@@ -28,7 +26,7 @@ public class DoorEventHandler implements EventHandler {
 
     private void closeDoors(String objectId) {
         for (Room room : smartHome.getRooms()) {
-            Door door= (Door) room.getSmartObjectByIdAndType(objectId, DOOR);
+            Door door= room.getDoorById(objectId);
             if (door != null) {
                 door.setOpen(false);
                 System.out.println("Door " + door.getId() + " in room " + room.getName() + " was closed.");
@@ -38,7 +36,7 @@ public class DoorEventHandler implements EventHandler {
 
     private void openDoors(String objectId) {
         for (Room room : smartHome.getRooms()) {
-            Door door = (Door)room.getSmartObjectByIdAndType(objectId, DOOR);
+            Door door = room.getDoorById(objectId);
             if (door != null) {
                 door.setOpen(true);
                 System.out.println("Door " + door.getId() + " in room " + room.getName() + " was opened.");
