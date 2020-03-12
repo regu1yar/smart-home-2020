@@ -1,12 +1,9 @@
 package ru.sbt.mipt.oop.events.handlers;
 
-import ru.sbt.mipt.oop.Room;
-import ru.sbt.mipt.oop.SmartHome;
+import ru.sbt.mipt.oop.components.*;
 import ru.sbt.mipt.oop.commands.CommandType;
 import ru.sbt.mipt.oop.commands.SensorCommand;
 import ru.sbt.mipt.oop.events.SensorEvent;
-import ru.sbt.mipt.oop.components.Door;
-import ru.sbt.mipt.oop.components.Light;
 
 import static ru.sbt.mipt.oop.events.SensorEventType.DOOR_CLOSED;
 
@@ -27,24 +24,37 @@ public class CloseHallDoorEventHandler implements EventHandler {
     }
 
     private void checkDoorAndTurnOffLightIfNeeded(String objectId) {
-        for (Room room : smartHome.getRooms()) {
-            Door door = room.getDoorById(objectId);
-            if (door != null) {
+        smartHome.execute(component -> {
+            if (component instanceof Room) {
+                Room room = (Room) component;
+
                 if (room.getName().equals("hall")) {
-                    turnOffAllLights();
+                    room.execute(roomComponent -> {
+                        if (roomComponent instanceof Door) {
+                            Door door = (Door) roomComponent;
+
+                            if (door.getId().equals(objectId)) {
+                                turnOffAllLights();
+                            }
+
+                        }
+                    });
                 }
+
             }
-        }
+        });
     }
 
     private void turnOffAllLights() {
-        for (Room homeRoom : smartHome.getRooms()) {
-            for (Light light : homeRoom.getLights()) {
+        smartHome.execute(component -> {
+            if (component instanceof Light) {
+                Light light = (Light) component;
                 light.setOn(false);
+
                 SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
                 sendCommand(command);
             }
-        }
+        });
     }
 
     private void sendCommand(SensorCommand command) {

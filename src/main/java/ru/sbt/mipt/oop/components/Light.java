@@ -1,9 +1,8 @@
 package ru.sbt.mipt.oop.components;
 
-import ru.sbt.mipt.oop.Actionable;
 import ru.sbt.mipt.oop.actions.Action;
 
-public class Light implements Actionable, HomeComponent {
+public class Light implements ActionableComponent {
     private boolean isOn;
     private final String id;
 
@@ -27,10 +26,5 @@ public class Light implements Actionable, HomeComponent {
     @Override
     public void execute(Action action) {
         action.applyTo(this);
-    }
-
-    @Override
-    public ComponentType getComponentType() {
-        return ComponentType.LIGHT;
     }
 }

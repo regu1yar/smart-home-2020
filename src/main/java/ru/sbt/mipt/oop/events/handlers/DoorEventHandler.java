@@ -1,9 +1,7 @@
 package ru.sbt.mipt.oop.events.handlers;
 
-import ru.sbt.mipt.oop.Room;
-import ru.sbt.mipt.oop.SmartHome;
+import ru.sbt.mipt.oop.components.*;
 import ru.sbt.mipt.oop.events.SensorEvent;
-import ru.sbt.mipt.oop.components.Door;
 
 public class DoorEventHandler implements EventHandler {
     private final SmartHome smartHome;
@@ -24,23 +22,45 @@ public class DoorEventHandler implements EventHandler {
         }
     }
 
-    private void closeDoors(String objectId) {
-        for (Room room : smartHome.getRooms()) {
-            Door door= room.getDoorById(objectId);
-            if (door != null) {
-                door.setOpen(false);
-                System.out.println("Door " + door.getId() + " in room " + room.getName() + " was closed.");
+    private void openDoors(String objectId) {
+        smartHome.execute(component -> {
+            if (component instanceof Room) {
+                Room room = (Room) component;
+
+                room.execute(roomComponent -> {
+                    if (roomComponent instanceof Door) {
+                        Door door = (Door) roomComponent;
+
+                        if (door.getId().equals(objectId)) {
+                            door.setOpen(true);
+                            System.out.println("Door " + door.getId() + " in room " + room.getName() + " was opened.");
+                        }
+
+                    }
+                });
+
             }
-        }
+        });
     }
 
-    private void openDoors(String objectId) {
-        for (Room room : smartHome.getRooms()) {
-            Door door = room.getDoorById(objectId);
-            if (door != null) {
-                door.setOpen(true);
-                System.out.println("Door " + door.getId() + " in room " + room.getName() + " was opened.");
+    private void closeDoors(String objectId) {
+        smartHome.execute(component -> {
+            if (component instanceof Room) {
+                Room room = (Room) component;
+
+                room.execute(roomComponent -> {
+                    if (roomComponent instanceof Door) {
+                        Door door = (Door) roomComponent;
+
+                        if (door.getId().equals(objectId)) {
+                            door.setOpen(false);
+                            System.out.println("Door " + door.getId() + " in room " + room.getName() + " was closed.");
+                        }
+
+                    }
+                });
+
             }
-        }
+        });
     }
 }

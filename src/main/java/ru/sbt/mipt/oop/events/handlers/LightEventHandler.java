@@ -1,11 +1,8 @@
 package ru.sbt.mipt.oop.events.handlers;
 
-import ru.sbt.mipt.oop.Room;
-import ru.sbt.mipt.oop.actions.Action;
-import ru.sbt.mipt.oop.components.ComponentType;
-import ru.sbt.mipt.oop.components.HomeComponent;
+import ru.sbt.mipt.oop.components.Room;
 import ru.sbt.mipt.oop.events.SensorEvent;
-import ru.sbt.mipt.oop.SmartHome;
+import ru.sbt.mipt.oop.components.SmartHome;
 import ru.sbt.mipt.oop.components.Light;
 
 public class LightEventHandler implements EventHandler {
@@ -28,30 +25,44 @@ public class LightEventHandler implements EventHandler {
     }
 
     private void turnOnLights(String objectId) {
-        smartHome.execute(new Action() {
-            @Override
-            public void applyTo(HomeComponent component) {
-                if (component.getComponentType() == ComponentType.LIGHT && component.getId().equals(objectId)) {
+        smartHome.execute(component -> {
+            if (component instanceof Room) {
+                Room room = (Room) component;
 
-                }
+                room.execute(roomComponent -> {
+                    if (roomComponent instanceof Light) {
+                        Light light = (Light) roomComponent;
+
+                        if (light.getId().equals(objectId)) {
+                            light.setOn(true);
+                            System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned on.");
+                        }
+
+                    }
+                });
+
             }
         });
-        for (Room room : smartHome.getRooms()) {
-            Light light = room.getLightById(objectId);
-            if (light != null) {
-                light.setOn(true);
-                System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned on.");
-            }
-        }
     }
 
     private void turnOffLights(String objectId) {
-        for (Room room : smartHome.getRooms()) {
-            Light light = room.getLightById(objectId);
-            if (light != null) {
-                light.setOn(false);
-                System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned off.");
+        smartHome.execute(component -> {
+            if (component instanceof Room) {
+                Room room = (Room) component;
+
+                room.execute(roomComponent -> {
+                    if (roomComponent instanceof Light) {
+                        Light light = (Light) roomComponent;
+
+                        if (light.getId().equals(objectId)) {
+                            light.setOn(false);
+                            System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned off.");
+                        }
+
+                    }
+                });
+
             }
-        }
+        });
     }
 }

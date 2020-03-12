@@ -1,7 +1,7 @@
 package ru.sbt.mipt.oop.actions;
 
-import ru.sbt.mipt.oop.components.HomeComponent;
+import ru.sbt.mipt.oop.components.ActionableComponent;
 
 public interface Action {
-    void applyTo(HomeComponent component);
+    void applyTo(ActionableComponent component);
 }

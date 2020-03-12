@@ -2,7 +2,8 @@ package ru.sbt.mipt.oop.serialization;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import ru.sbt.mipt.oop.SmartHome;
+import ru.sbt.mipt.oop.components.ActionableComponent;
+import ru.sbt.mipt.oop.components.SmartHome;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,6 +15,11 @@ public class SmartHomeJsonDeserializer implements SmartHomeDeserializer {
 
     public SmartHomeJsonDeserializer(String source) {
         GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(
+                ActionableComponent.class,
+                new ActionableComponentInterfaceAdaptor()
+        );
+
         this.gson = gsonBuilder.setPrettyPrinting().create();
         this.source = source;
     }

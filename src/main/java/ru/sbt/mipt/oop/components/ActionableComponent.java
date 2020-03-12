@@ -1,7 +1,7 @@
-package ru.sbt.mipt.oop;
+package ru.sbt.mipt.oop.components;
 
 import ru.sbt.mipt.oop.actions.Action;
 
-public interface Actionable {
+public interface ActionableComponent {
     void execute(Action action);
 }
