@@ -3,7 +3,9 @@ package ru.sbt.mipt.oop.components;
 import ru.sbt.mipt.oop.Actionable;
 import ru.sbt.mipt.oop.actions.Action;
 
-public class Light implements Actionable, HomeComponent {
+import static ru.sbt.mipt.oop.components.HomeComponentType.LIGHT;
+
+public class Light implements HomeComponent, Actionable {
     private boolean isOn;
     private final String id;
 
@@ -20,6 +22,11 @@ public class Light implements Actionable, HomeComponent {
         return id;
     }
 
+    @Override
+    public HomeComponentType getComponentType() {
+        return LIGHT;
+    }
+
     public void setOn(boolean on) {
         isOn = on;
     }
@@ -27,10 +34,5 @@ public class Light implements Actionable, HomeComponent {
     @Override
     public void execute(Action action) {
         action.applyTo(this);
-    }
-
-    @Override
-    public ComponentType getComponentType() {
-        return ComponentType.LIGHT;
     }
 }

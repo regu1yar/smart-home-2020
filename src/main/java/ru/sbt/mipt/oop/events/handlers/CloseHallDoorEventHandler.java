@@ -5,13 +5,13 @@ import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.commands.CommandType;
 import ru.sbt.mipt.oop.commands.SensorCommand;
 import ru.sbt.mipt.oop.events.SensorEvent;
-import ru.sbt.mipt.oop.objects.Door;
-import ru.sbt.mipt.oop.objects.Light;
-import ru.sbt.mipt.oop.objects.SmartObject;
+import ru.sbt.mipt.oop.components.Door;
+import ru.sbt.mipt.oop.components.Light;
+import ru.sbt.mipt.oop.components.HomeComponent;
 
 import static ru.sbt.mipt.oop.events.SensorEventType.DOOR_CLOSED;
-import static ru.sbt.mipt.oop.objects.SmartObjectType.DOOR;
-import static ru.sbt.mipt.oop.objects.SmartObjectType.LIGHT;
+import static ru.sbt.mipt.oop.components.HomeComponentType.DOOR;
+import static ru.sbt.mipt.oop.components.HomeComponentType.LIGHT;
 
 public class CloseHallDoorEventHandler implements EventHandler {
     private final SmartHome smartHome;
@@ -42,8 +42,8 @@ public class CloseHallDoorEventHandler implements EventHandler {
 
     private void turnOffAllLights() {
         for (Room homeRoom : smartHome.getRooms()) {
-            for (SmartObject smartObject : homeRoom.getAllSmartObjectsByType(LIGHT)) {
-                Light light = (Light) smartObject;
+            for (HomeComponent homeComponent : homeRoom.getAllSmartObjectsByType(LIGHT)) {
+                Light light = (Light) homeComponent;
                 light.setOn(false);
                 SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
                 sendCommand(command);

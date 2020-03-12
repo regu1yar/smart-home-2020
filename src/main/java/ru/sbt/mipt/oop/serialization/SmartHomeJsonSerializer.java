@@ -3,7 +3,7 @@ package ru.sbt.mipt.oop.serialization;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.sbt.mipt.oop.SmartHome;
-import ru.sbt.mipt.oop.objects.SmartObject;
+import ru.sbt.mipt.oop.components.HomeComponent;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -18,8 +18,8 @@ public class SmartHomeJsonSerializer implements SmartHomeSerializer {
     public SmartHomeJsonSerializer(String target) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(
-                SmartObject.class,
-                new SmartObjectInterfaceAdaptor<>()
+                HomeComponent.class,
+                new HomeComponentInterfaceAdaptor<>()
         );
 
         this.gson = gsonBuilder.setPrettyPrinting().create();

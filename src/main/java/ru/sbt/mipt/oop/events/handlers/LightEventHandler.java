@@ -1,14 +1,10 @@
 package ru.sbt.mipt.oop.events.handlers;
 
-import ru.sbt.mipt.oop.Room;
-import ru.sbt.mipt.oop.actions.Action;
-import ru.sbt.mipt.oop.components.ComponentType;
-import ru.sbt.mipt.oop.components.HomeComponent;
 import ru.sbt.mipt.oop.events.SensorEvent;
 import ru.sbt.mipt.oop.SmartHome;
 import ru.sbt.mipt.oop.components.Light;
 
-import static ru.sbt.mipt.oop.objects.SmartObjectType.LIGHT;
+import static ru.sbt.mipt.oop.components.HomeComponentType.LIGHT;
 
 public class LightEventHandler implements EventHandler {
     private final SmartHome smartHome;
@@ -30,30 +26,22 @@ public class LightEventHandler implements EventHandler {
     }
 
     private void turnOnLights(String objectId) {
-        smartHome.execute(new Action() {
-            @Override
-            public void applyTo(HomeComponent component) {
-                if (component.getComponentType() == ComponentType.LIGHT && component.getId().equals(objectId)) {
-
-                }
-            }
-        });
-        for (Room room : smartHome.getRooms()) {
-            Light light = (Light) room.getSmartObjectByIdAndType(objectId, LIGHT);
-            if (light != null) {
+        smartHome.execute(component -> {
+            if (component.getComponentType() == LIGHT && component.getId().equals(objectId)) {
+                Light light = (Light) component;
                 light.setOn(true);
                 System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned on.");
             }
-        }
+        });
     }
 
     private void turnOffLights(String objectId) {
-        for (Room room : smartHome.getRooms()) {
-            Light light = (Light) room.getSmartObjectByIdAndType(objectId, LIGHT);
-            if (light != null) {
+        smartHome.execute(component -> {
+            if (component.getComponentType() == LIGHT && component.getId().equals(objectId)) {
+                Light light = (Light) component;
                 light.setOn(false);
                 System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned off.");
             }
-        }
+        });
     }
 }

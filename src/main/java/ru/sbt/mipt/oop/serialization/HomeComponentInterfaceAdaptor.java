@@ -4,7 +4,7 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class SmartObjectInterfaceAdaptor<SmartObject> implements JsonSerializer<SmartObject>, JsonDeserializer<SmartObject> {
+public class HomeComponentInterfaceAdaptor<SmartObject> implements JsonSerializer<SmartObject>, JsonDeserializer<SmartObject> {
     private static final String CLASSNAME = "CLASSNAME";
     private static final String DATA = "DATA";
 

@@ -2,10 +2,12 @@ package ru.sbt.mipt.oop.events.handlers;
 
 import ru.sbt.mipt.oop.Room;
 import ru.sbt.mipt.oop.SmartHome;
+import ru.sbt.mipt.oop.components.Light;
 import ru.sbt.mipt.oop.events.SensorEvent;
 import ru.sbt.mipt.oop.components.Door;
 
-import static ru.sbt.mipt.oop.objects.SmartObjectType.DOOR;
+import static ru.sbt.mipt.oop.components.HomeComponentType.DOOR;
+import static ru.sbt.mipt.oop.components.HomeComponentType.LIGHT;
 
 public class DoorEventHandler implements EventHandler {
     private final SmartHome smartHome;
@@ -27,22 +29,22 @@ public class DoorEventHandler implements EventHandler {
     }
 
     private void closeDoors(String objectId) {
-        for (Room room : smartHome.getRooms()) {
-            Door door= (Door) room.getSmartObjectByIdAndType(objectId, DOOR);
-            if (door != null) {
+        smartHome.execute(component -> {
+            if (component.getComponentType() == DOOR && component.getId().equals(objectId)) {
+                Door door = (Door) component;
                 door.setOpen(false);
                 System.out.println("Door " + door.getId() + " in room " + room.getName() + " was closed.");
             }
-        }
+        });
     }
 
     private void openDoors(String objectId) {
-        for (Room room : smartHome.getRooms()) {
-            Door door = (Door)room.getSmartObjectByIdAndType(objectId, DOOR);
-            if (door != null) {
+        smartHome.execute(component -> {
+            if (component.getComponentType() == DOOR && component.getId().equals(objectId)) {
+                Door door = (Door) component;
                 door.setOpen(true);
                 System.out.println("Door " + door.getId() + " in room " + room.getName() + " was opened.");
             }
-        }
+        });
     }
 }

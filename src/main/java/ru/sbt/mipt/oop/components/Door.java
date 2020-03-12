@@ -3,7 +3,9 @@ package ru.sbt.mipt.oop.components;
 import ru.sbt.mipt.oop.Actionable;
 import ru.sbt.mipt.oop.actions.Action;
 
-public class Door implements Actionable, HomeComponent {
+import static ru.sbt.mipt.oop.components.HomeComponentType.DOOR;
+
+public class Door implements HomeComponent, Actionable {
     private final String id;
     private boolean isOpen;
 
@@ -16,6 +18,11 @@ public class Door implements Actionable, HomeComponent {
         return id;
     }
 
+    @Override
+    public HomeComponentType getComponentType() {
+        return DOOR;
+    }
+
     public void setOpen(boolean open) {
         isOpen = open;
     }
@@ -23,10 +30,5 @@ public class Door implements Actionable, HomeComponent {
     @Override
     public void execute(Action action) {
         action.applyTo(this);
-    }
-
-    @Override
-    public ComponentType getComponentType() {
-        return ComponentType.DOOR;
     }
 }
