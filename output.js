@@ -7,15 +7,15 @@
           {
             "CLASSNAME": "ru.sbt.mipt.oop.components.Light",
             "DATA": {
-              "isOn": false,
-              "id": "1"
+              "id": "1",
+              "isOn": false
             }
           },
           {
             "CLASSNAME": "ru.sbt.mipt.oop.components.Light",
             "DATA": {
-              "isOn": true,
-              "id": "2"
+              "id": "2",
+              "isOn": true
             }
           },
           {
@@ -36,8 +36,8 @@
           {
             "CLASSNAME": "ru.sbt.mipt.oop.components.Light",
             "DATA": {
-              "isOn": true,
-              "id": "3"
+              "id": "3",
+              "isOn": true
             }
           },
           {
@@ -58,22 +58,22 @@
           {
             "CLASSNAME": "ru.sbt.mipt.oop.components.Light",
             "DATA": {
-              "isOn": false,
-              "id": "4"
+              "id": "4",
+              "isOn": false
             }
           },
           {
             "CLASSNAME": "ru.sbt.mipt.oop.components.Light",
             "DATA": {
-              "isOn": false,
-              "id": "5"
+              "id": "5",
+              "isOn": false
             }
           },
           {
             "CLASSNAME": "ru.sbt.mipt.oop.components.Light",
             "DATA": {
-              "isOn": false,
-              "id": "6"
+              "id": "6",
+              "isOn": false
             }
           },
           {
@@ -94,22 +94,22 @@
           {
             "CLASSNAME": "ru.sbt.mipt.oop.components.Light",
             "DATA": {
-              "isOn": false,
-              "id": "7"
+              "id": "7",
+              "isOn": false
             }
           },
           {
             "CLASSNAME": "ru.sbt.mipt.oop.components.Light",
             "DATA": {
-              "isOn": false,
-              "id": "8"
+              "id": "8",
+              "isOn": false
             }
           },
           {
             "CLASSNAME": "ru.sbt.mipt.oop.components.Light",
             "DATA": {
-              "isOn": false,
-              "id": "9"
+              "id": "9",
+              "isOn": false
             }
           },
           {

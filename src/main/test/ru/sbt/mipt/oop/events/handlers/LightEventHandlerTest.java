@@ -15,18 +15,17 @@ import static org.junit.Assert.*;
 import static ru.sbt.mipt.oop.events.SensorEventType.*;
 
 public class LightEventHandlerTest {
-    Light hallLight0 = new Light("0", false);
-    Light bedroomLight1 = new Light("1", false);
-    Light bathroomLight2 = new Light("2", true);
-    Door bedroomDoor0 = new Door("0", true);
-    Door hallDoor1 = new Door("1", false);
-    SmartHome smartHome;
+    private Light hallLight0 = new Light("0", false);
+    private Light bedroomLight1 = new Light("1", false);
+    private Light bathroomLight2 = new Light("2", true);
+    private Door bedroomDoor0 = new Door("0", true);
+    private Door hallDoor1 = new Door("1", false);
 
-    EventHandler lightEventHandler;
+    private EventHandler lightEventHandler;
 
     @Before
-    public void setUp() throws Exception {
-        smartHome = new SmartHome(Arrays.asList(
+    public void setUp() {
+        SmartHome smartHome = new SmartHome(Arrays.asList(
                 new Room(Arrays.asList(hallLight0, hallDoor1), "hall"),
                 new Room(Arrays.asList(bedroomLight1, bedroomDoor0), "bedroom"),
                 new Room(Collections.singletonList(bathroomLight2), "bathroom")
