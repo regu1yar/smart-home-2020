@@ -3,8 +3,8 @@ package ru.sbt.mipt.oop.components;
 import ru.sbt.mipt.oop.actions.Action;
 
 public class Light implements ActionableComponent {
-    private boolean isOn;
     private final String id;
+    private boolean isOn;
 
     public Light(String id, boolean isOn) {
         this.id = id;
