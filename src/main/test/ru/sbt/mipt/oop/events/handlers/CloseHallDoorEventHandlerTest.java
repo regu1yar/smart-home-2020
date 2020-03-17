@@ -2,6 +2,11 @@ package ru.sbt.mipt.oop.events.handlers;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+import ru.sbt.mipt.oop.commands.CommandSender;
 import ru.sbt.mipt.oop.components.Door;
 import ru.sbt.mipt.oop.components.Light;
 import ru.sbt.mipt.oop.components.Room;
@@ -12,10 +17,17 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static ru.sbt.mipt.oop.events.SensorEventType.*;
 import static org.junit.Assert.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CloseHallDoorEventHandlerTest {
+    @Mock
+    private CommandSender commandSender;
+
     private Light hallLight0 = new Light("0", true);
     private Light bedroomLight1 = new Light("1", false);
     private Light bathroomLight2 = new Light("2", true);
@@ -27,6 +39,7 @@ public class CloseHallDoorEventHandlerTest {
 
     @Before
     public void setUp() {
+        MockitoAnnotations.initMocks(this);
         SmartHome smartHome = new SmartHome(Arrays.asList(
                 new Room(Arrays.asList(hallLight0, hallDoor1), "hall"),
                 new Room(Arrays.asList(bedroomLight1, bedroomDoor0), "bedroom"),
@@ -34,7 +47,7 @@ public class CloseHallDoorEventHandlerTest {
                 new Room(Collections.singletonList(kitchenDoor2), "kitchen")
         ));
 
-        hallDoorEventHandler = new CloseHallDoorEventHandler(smartHome);
+        hallDoorEventHandler = new CloseHallDoorEventHandler(smartHome, commandSender);
     }
 
     @Test
@@ -49,6 +62,7 @@ public class CloseHallDoorEventHandlerTest {
         assertEquals(true, bedroomDoor0.isOpen());
         assertEquals(true, hallDoor1.isOpen());
         assertEquals(false, kitchenDoor2.isOpen());
+        verify(commandSender, times(3)).sendCommand(any());
     }
 
     @Test

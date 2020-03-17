@@ -12,9 +12,9 @@ public class CloseHallDoorEventHandler implements EventHandler {
     private final SmartHome smartHome;
     private final CommandSender commandSender;
 
-    public CloseHallDoorEventHandler(SmartHome smartHome) {
+    public CloseHallDoorEventHandler(SmartHome smartHome, CommandSender commandSender) {
         this.smartHome = smartHome;
-        commandSender = new CommandSender(smartHome);
+        this.commandSender = commandSender;
     }
 
     @Override
