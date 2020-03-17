@@ -1,5 +1,6 @@
 package ru.sbt.mipt.oop.events.handlers;
 
+import ru.sbt.mipt.oop.commands.CommandSender;
 import ru.sbt.mipt.oop.components.*;
 import ru.sbt.mipt.oop.commands.CommandType;
 import ru.sbt.mipt.oop.commands.SensorCommand;
@@ -9,9 +10,11 @@ import static ru.sbt.mipt.oop.events.SensorEventType.DOOR_CLOSED;
 
 public class CloseHallDoorEventHandler implements EventHandler {
     private final SmartHome smartHome;
+    private final CommandSender commandSender;
 
     public CloseHallDoorEventHandler(SmartHome smartHome) {
         this.smartHome = smartHome;
+        commandSender = new CommandSender(smartHome);
     }
 
     @Override
@@ -52,12 +55,8 @@ public class CloseHallDoorEventHandler implements EventHandler {
                 light.setOn(false);
 
                 SensorCommand command = new SensorCommand(CommandType.LIGHT_OFF, light.getId());
-                sendCommand(command);
+                commandSender.sendCommand(command);
             }
         });
-    }
-
-    private void sendCommand(SensorCommand command) {
-        System.out.println("Pretent we're sending command " + command);
     }
 }

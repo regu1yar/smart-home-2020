@@ -14,15 +14,15 @@ public class DoorEventHandler implements EventHandler {
     public void handleEvent(SensorEvent event) {
         switch (event.getType()) {
             case DOOR_OPEN:
-                openDoors(event.getObjectId());
+                toggleDoors(event.getObjectId(), true);
                 break;
             case DOOR_CLOSED:
-                closeDoors(event.getObjectId());
+                toggleDoors(event.getObjectId(), false);
                 break;
         }
     }
 
-    private void openDoors(String objectId) {
+    private void toggleDoors(String objectId, boolean isOpen) {
         smartHome.execute(component -> {
             if (component instanceof Room) {
                 Room room = (Room) component;
@@ -32,8 +32,12 @@ public class DoorEventHandler implements EventHandler {
                         Door door = (Door) roomComponent;
 
                         if (door.getId().equals(objectId)) {
-                            door.setOpen(true);
-                            System.out.println("Door " + door.getId() + " in room " + room.getName() + " was opened.");
+                            door.setOpen(isOpen);
+                            if (isOpen) {
+                                logAction(door, room, "was opened");
+                            } else {
+                                logAction(door, room, "was closed");
+                            }
                         }
 
                     }
@@ -43,24 +47,7 @@ public class DoorEventHandler implements EventHandler {
         });
     }
 
-    private void closeDoors(String objectId) {
-        smartHome.execute(component -> {
-            if (component instanceof Room) {
-                Room room = (Room) component;
-
-                room.execute(roomComponent -> {
-                    if (roomComponent instanceof Door) {
-                        Door door = (Door) roomComponent;
-
-                        if (door.getId().equals(objectId)) {
-                            door.setOpen(false);
-                            System.out.println("Door " + door.getId() + " in room " + room.getName() + " was closed.");
-                        }
-
-                    }
-                });
-
-            }
-        });
+    private static void logAction(Door door, Room room, String action) {
+        System.out.println("Door " + door.getId() + " in room " + room.getName() + " " + action);
     }
 }
