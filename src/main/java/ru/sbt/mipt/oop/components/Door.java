@@ -6,9 +6,13 @@ public class Door implements ActionableComponent {
     private final String id;
     private boolean isOpen;
 
-    public Door(boolean isOpen, String id) {
-        this.isOpen = isOpen;
+    public boolean isOpen() {
+        return isOpen;
+    }
+
+    public Door(String id, boolean isOpen) {
         this.id = id;
+        this.isOpen = isOpen;
     }
 
     public String getId() {

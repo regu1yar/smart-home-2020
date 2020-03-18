@@ -16,15 +16,15 @@ public class LightEventHandler implements EventHandler {
     public void handleEvent(SensorEvent event) {
         switch (event.getType()) {
             case LIGHT_ON:
-                turnOnLights(event.getObjectId());
+                toggleLight(event.getObjectId(), true);
                 break;
             case LIGHT_OFF:
-                turnOffLights(event.getObjectId());
+                toggleLight(event.getObjectId(), false);
                 break;
         }
     }
 
-    private void turnOnLights(String objectId) {
+    private void toggleLight(String objectId, boolean isOn) {
         smartHome.execute(component -> {
             if (component instanceof Room) {
                 Room room = (Room) component;
@@ -34,8 +34,12 @@ public class LightEventHandler implements EventHandler {
                         Light light = (Light) roomComponent;
 
                         if (light.getId().equals(objectId)) {
-                            light.setOn(true);
-                            System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned on.");
+                            light.setOn(isOn);
+                            if (isOn) {
+                                logAction(light, room, "was turned on");
+                            } else {
+                                logAction(light, room, "was turned off");
+                            }
                         }
 
                     }
@@ -45,24 +49,7 @@ public class LightEventHandler implements EventHandler {
         });
     }
 
-    private void turnOffLights(String objectId) {
-        smartHome.execute(component -> {
-            if (component instanceof Room) {
-                Room room = (Room) component;
-
-                room.execute(roomComponent -> {
-                    if (roomComponent instanceof Light) {
-                        Light light = (Light) roomComponent;
-
-                        if (light.getId().equals(objectId)) {
-                            light.setOn(false);
-                            System.out.println("Light " + light.getId() + " in room " + room.getName() + " was turned off.");
-                        }
-
-                    }
-                });
-
-            }
-        });
+    private static void logAction(Light light, Room room, String action) {
+        System.out.println("Light " + light.getId() + " in room " + room.getName() + " " + action);
     }
 }
