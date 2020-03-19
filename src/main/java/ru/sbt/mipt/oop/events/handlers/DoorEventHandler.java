@@ -24,26 +24,15 @@ public class DoorEventHandler implements EventHandler {
 
     private void toggleDoors(String objectId, boolean isOpen) {
         smartHome.execute(component -> {
-            if (component instanceof Room) {
-                Room room = (Room) component;
-
-                room.execute(roomComponent -> {
-                    if (roomComponent instanceof Door) {
-                        Door door = (Door) roomComponent;
-
-                        if (door.getId().equals(objectId)) {
-                            door.setOpen(isOpen);
-                            if (isOpen) {
-                                logAction(door, room, "was opened");
-                            } else {
-                                logAction(door, room, "was closed");
-                            }
-                        }
-
-                    }
-                });
-
-            }
+            if (!(component instanceof Room)) return;
+            Room room = (Room) component;
+            room.execute(roomComponent -> {
+                if (!(roomComponent instanceof Door)) return;
+                Door door = (Door) roomComponent;
+                if (!(door.getId().equals(objectId))) return;
+                door.setOpen(isOpen);
+                logAction(door, room, isOpen ? "was opened" : "was closed");
+            });
         });
     }
 

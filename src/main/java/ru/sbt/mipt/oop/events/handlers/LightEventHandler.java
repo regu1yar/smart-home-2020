@@ -26,26 +26,15 @@ public class LightEventHandler implements EventHandler {
 
     private void toggleLight(String objectId, boolean isOn) {
         smartHome.execute(component -> {
-            if (component instanceof Room) {
-                Room room = (Room) component;
-
-                room.execute(roomComponent -> {
-                    if (roomComponent instanceof Light) {
-                        Light light = (Light) roomComponent;
-
-                        if (light.getId().equals(objectId)) {
-                            light.setOn(isOn);
-                            if (isOn) {
-                                logAction(light, room, "was turned on");
-                            } else {
-                                logAction(light, room, "was turned off");
-                            }
-                        }
-
-                    }
-                });
-
-            }
+            if (!(component instanceof Room)) return;
+            Room room = (Room) component;
+            room.execute(roomComponent -> {
+            if (!(roomComponent instanceof Light)) return;
+                Light light = (Light) roomComponent;
+                if (!light.getId().equals(objectId)) return;
+                light.setOn(isOn);
+                logAction(light, room, isOn ? "was turned on" : "was turned off");
+            });
         });
     }
 
