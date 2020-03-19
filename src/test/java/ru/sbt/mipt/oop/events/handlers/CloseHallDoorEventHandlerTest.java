@@ -14,9 +14,7 @@ import ru.sbt.mipt.oop.components.SmartHome;
 import ru.sbt.mipt.oop.events.SensorEvent;
 
 import java.util.Arrays;
-import java.util.Collections;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -30,85 +28,51 @@ public class CloseHallDoorEventHandlerTest {
 
     private Light hallLight0 = new Light("0", true);
     private Light bedroomLight1 = new Light("1", false);
-    private Light bathroomLight2 = new Light("2", true);
-    private Door bedroomDoor0 = new Door("0", true);
+    private Door bedroomDoor0 = new Door("0", false);
     private Door hallDoor1 = new Door("1", true);
-    private Door kitchenDoor2 = new Door("2", false);
+    SmartHome smartHome;
 
     private EventHandler hallDoorEventHandler;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        SmartHome smartHome = new SmartHome(Arrays.asList(
+        smartHome = new SmartHome(Arrays.asList(
                 new Room(Arrays.asList(hallLight0, hallDoor1), "hall"),
-                new Room(Arrays.asList(bedroomLight1, bedroomDoor0), "bedroom"),
-                new Room(Collections.singletonList(bathroomLight2), "bathroom"),
-                new Room(Collections.singletonList(kitchenDoor2), "kitchen")
+                new Room(Arrays.asList(bedroomLight1, bedroomDoor0), "bedroom")
         ));
 
         hallDoorEventHandler = new CloseHallDoorEventHandler(smartHome, commandSender);
     }
 
     @Test
-    public void handleHallDoorClosedEvent() {
-        checkInitialState();
+    public void closeHallDoorAndTurnOffLights() {
+        hallDoorEventHandler.handleEvent(new SensorEvent(DOOR_CLOSED, hallDoor1.getId()));
+
+        smartHome.execute(component -> {
+            if (!(component instanceof Light)) return;
+            Light light = (Light) component;
+            assertFalse(light.isOn());
+        });
         assertTrue(hallDoor1.isOpen());
-
-        hallDoorEventHandler.handleEvent(new SensorEvent(DOOR_CLOSED, "1"));
-        assertEquals(false, hallLight0.isOn());
-        assertEquals(false, bedroomLight1.isOn());
-        assertEquals(false, bathroomLight2.isOn());
-        assertEquals(true, bedroomDoor0.isOpen());
-        assertEquals(true, hallDoor1.isOpen());
-        assertEquals(false, kitchenDoor2.isOpen());
-        verify(commandSender, times(3)).sendCommand(any());
+        verify(commandSender, times(2)).sendCommand(any());
     }
 
     @Test
-    public void handleHallDoorClosedEventOnClosedDoor() {
-        checkInitialState();
-
-        hallDoor1.setOpen(false);
-        assertEquals(true, hallLight0.isOn());
-        assertEquals(false, bedroomLight1.isOn());
-        assertEquals(true, bathroomLight2.isOn());
-        assertEquals(true, bedroomDoor0.isOpen());
-        assertEquals(false, hallDoor1.isOpen());
-        assertEquals(false, kitchenDoor2.isOpen());
-
-        hallDoorEventHandler.handleEvent(new SensorEvent(DOOR_CLOSED, "2"));
-        assertEquals(true, hallLight0.isOn());
-        assertEquals(false, bedroomLight1.isOn());
-        assertEquals(true, bathroomLight2.isOn());
-        assertEquals(true, bedroomDoor0.isOpen());
-        assertEquals(false, hallDoor1.isOpen());
-        assertEquals(false, kitchenDoor2.isOpen());
+    public void dontTriggerOnOtherDoors() {
+        hallDoorEventHandler.handleEvent(new SensorEvent(DOOR_CLOSED, bedroomDoor0.getId()));
+        assertTrue(hallLight0.isOn());
     }
 
     @Test
-    public void handleDoorClosedEventOnNonExistingId() {
-        checkInitialState();
+    public void dontTriggerOnNonExistingId() {
         hallDoorEventHandler.handleEvent(new SensorEvent(DOOR_CLOSED, "3"));
-        checkInitialState();
+        assertTrue(hallLight0.isOn());
     }
 
     @Test
-    public void handleOtherEvents() {
-        checkInitialState();
-        hallDoorEventHandler.handleEvent(new SensorEvent(LIGHT_ON, "0"));
-        checkInitialState();
-        hallDoorEventHandler.handleEvent(new SensorEvent(DOOR_OPEN, "2"));
-        checkInitialState();
-    }
-
-
-    private void checkInitialState() {
-        assertEquals(true, hallLight0.isOn());
-        assertEquals(false, bedroomLight1.isOn());
-        assertEquals(true, bathroomLight2.isOn());
-        assertEquals(true, bedroomDoor0.isOpen());
-        assertEquals(true, hallDoor1.isOpen());
-        assertEquals(false, kitchenDoor2.isOpen());
+    public void dontTriggerOnOtherEvents() {
+        hallDoorEventHandler.handleEvent(new SensorEvent(DOOR_OPEN, hallDoor1.getId()));
+        assertTrue(hallLight0.isOn());
     }
 }
