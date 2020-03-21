@@ -1,10 +1,12 @@
-package ru.sbt.mipt.oop.events.handlers;
+package ru.sbt.mipt.oop.events.handling.handlers;
 
 import org.junit.Before;
 import org.junit.Test;
 import ru.sbt.mipt.oop.components.Light;
 import ru.sbt.mipt.oop.components.Room;
 import ru.sbt.mipt.oop.components.SmartHome;
+import ru.sbt.mipt.oop.events.handling.EventHandler;
+import ru.sbt.mipt.oop.events.handling.handlers.LightEventHandler;
 import ru.sbt.mipt.oop.events.types.SensorEvent;
 
 import java.util.Arrays;

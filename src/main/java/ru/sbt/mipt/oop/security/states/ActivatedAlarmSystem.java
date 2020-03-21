@@ -23,13 +23,13 @@ public class ActivatedAlarmSystem implements AlarmSystem {
         if (code.equals(this.code)) {
             alarmSystem.changeState(new DeactivatedAlarmSystem(alarmSystem));
         } else {
-            alarmSystem.changeState(new AlarmingAlarmSystem(alarmSystem));
+            alarmSystem.changeState(new AlarmingAlarmSystem(alarmSystem, code));
         }
     }
 
     @Override
     public void alarm() {
-        alarmSystem.changeState(new AlarmingAlarmSystem(alarmSystem));
+        alarmSystem.changeState(new AlarmingAlarmSystem(alarmSystem, code));
     }
 
     @Override

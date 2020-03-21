@@ -1,5 +1,6 @@
-package ru.sbt.mipt.oop.events.handlers;
+package ru.sbt.mipt.oop.events.handling.handlers;
 
+import ru.sbt.mipt.oop.events.handling.EventHandler;
 import ru.sbt.mipt.oop.events.types.AlarmSystemEvent;
 import ru.sbt.mipt.oop.events.types.Event;
 import ru.sbt.mipt.oop.security.AlarmSystem;
@@ -7,7 +8,7 @@ import ru.sbt.mipt.oop.security.AlarmSystem;
 public class AlarmEventHandler implements EventHandler {
     AlarmSystem alarmSystem;
 
-    AlarmEventHandler(AlarmSystem alarmSystem) {
+    public AlarmEventHandler(AlarmSystem alarmSystem) {
         this.alarmSystem = alarmSystem;
     }
 

@@ -23,7 +23,7 @@ public class DeactivatedAlarmSystem implements AlarmSystem {
 
     @Override
     public void alarm() {
-        alarmSystem.changeState(new AlarmingAlarmSystem(alarmSystem));
+        // do nothing
     }
 
     @Override

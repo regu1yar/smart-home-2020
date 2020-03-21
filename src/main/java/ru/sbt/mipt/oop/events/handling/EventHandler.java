@@ -1,4 +1,4 @@
-package ru.sbt.mipt.oop.events.handlers;
+package ru.sbt.mipt.oop.events.handling;
 
 import ru.sbt.mipt.oop.events.types.Event;
 

@@ -1,8 +1,9 @@
 package ru.sbt.mipt.oop.events;
 
+import ru.sbt.mipt.oop.events.types.Event;
 import ru.sbt.mipt.oop.events.types.SensorEvent;
-import ru.sbt.mipt.oop.events.handlers.EventHandler;
-import ru.sbt.mipt.oop.events.producers.EventProducer;
+import ru.sbt.mipt.oop.events.handling.EventHandler;
+import ru.sbt.mipt.oop.events.producing.EventProducer;
 
 import java.util.Collection;
 
@@ -17,14 +18,14 @@ public class EventProcessor {
     }
 
     public void startProcessing() {
-        SensorEvent event = eventProducer.getNextSensorEvent();
+        Event event = eventProducer.getNextEvent();
         while (event != null) {
             processEvent(event);
-            event = eventProducer.getNextSensorEvent();
+            event = eventProducer.getNextEvent();
         }
     }
 
-    private void processEvent(SensorEvent event) {
+    private void processEvent(Event event) {
         for (EventHandler handler : handlers) {
             handler.handleEvent(event);
         }

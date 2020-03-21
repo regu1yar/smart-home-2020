@@ -46,10 +46,10 @@ public class SmartAlarmSystemTest {
     }
 
     @Test
-    public void triggerAlarmManuallyFromDeactivatedState() {
+    public void unableToTriggerAlarmManuallyFromDeactivatedState() {
         alarmSystem.alarm();
 
-        assertEquals(ALARMING, alarmSystem.getState());
+        assertEquals(DEACTIVATED, alarmSystem.getState());
     }
 
     @Test

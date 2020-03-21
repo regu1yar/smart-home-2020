@@ -6,9 +6,11 @@ import ru.sbt.mipt.oop.security.SmartAlarmSystem;
 
 public class AlarmingAlarmSystem implements AlarmSystem {
     private final SmartAlarmSystem alarmSystem;
+    private final String code;
 
-    public AlarmingAlarmSystem(SmartAlarmSystem alarmSystem) {
+    public AlarmingAlarmSystem(SmartAlarmSystem alarmSystem, String code) {
         this.alarmSystem = alarmSystem;
+        this.code = code;
     }
 
     @Override
@@ -18,7 +20,9 @@ public class AlarmingAlarmSystem implements AlarmSystem {
 
     @Override
     public void deactivate(String code) {
-        // do nothing
+        if (code.equals(this.code)) {
+            alarmSystem.changeState(new DeactivatedAlarmSystem(alarmSystem));
+        }
     }
 
     @Override
