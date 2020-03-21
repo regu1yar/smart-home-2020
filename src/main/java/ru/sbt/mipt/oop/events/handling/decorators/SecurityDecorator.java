@@ -5,6 +5,7 @@ import ru.sbt.mipt.oop.events.handling.HandlerDecorator;
 import ru.sbt.mipt.oop.events.types.Event;
 import ru.sbt.mipt.oop.security.AlarmSystem;
 
+import static ru.sbt.mipt.oop.events.types.EventType.getSensorEvents;
 import static ru.sbt.mipt.oop.security.AlarmSystemState.*;
 
 public class SecurityDecorator extends HandlerDecorator {
@@ -17,7 +18,10 @@ public class SecurityDecorator extends HandlerDecorator {
 
     @Override
     public void handleEvent(Event event) {
-        if (alarmSystem.getState() == ACTIVATED) {
+        if (!getSensorEvents().contains(event.getType()) || getSafeStates().contains(alarmSystem.getState())) {
+            super.handleEvent(event);
+            return;
+        } else if (alarmSystem.getState() == ACTIVATED) {
             alarmSystem.alarm();
             return;
         } else if (alarmSystem.getState() == ALARMING) {

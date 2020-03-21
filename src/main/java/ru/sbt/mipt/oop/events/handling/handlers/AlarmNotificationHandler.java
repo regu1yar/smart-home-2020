@@ -6,6 +6,7 @@ import ru.sbt.mipt.oop.events.types.SensorEvent;
 import ru.sbt.mipt.oop.notifications.Notifier;
 import ru.sbt.mipt.oop.security.AlarmSystem;
 
+import static ru.sbt.mipt.oop.events.types.EventType.getSensorEvents;
 import static ru.sbt.mipt.oop.security.AlarmSystemState.getUnsafeStates;
 
 public class AlarmNotificationHandler implements EventHandler {
@@ -21,7 +22,7 @@ public class AlarmNotificationHandler implements EventHandler {
 
     @Override
     public void handleEvent(Event event) {
-        if (event instanceof SensorEvent && getUnsafeStates().contains(alarmSystem.getState())) {
+        if (getSensorEvents().contains(event.getType()) && getUnsafeStates().contains(alarmSystem.getState())) {
             notifier.send(NOTIFICATION_MESSAGE);
         }
     }
