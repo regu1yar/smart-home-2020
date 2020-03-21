@@ -11,14 +11,14 @@ import ru.sbt.mipt.oop.components.Door;
 import ru.sbt.mipt.oop.components.Light;
 import ru.sbt.mipt.oop.components.Room;
 import ru.sbt.mipt.oop.components.SmartHome;
-import ru.sbt.mipt.oop.events.SensorEvent;
+import ru.sbt.mipt.oop.events.types.SensorEvent;
 
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static ru.sbt.mipt.oop.events.SensorEventType.*;
+import static ru.sbt.mipt.oop.events.types.EventType.*;
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)

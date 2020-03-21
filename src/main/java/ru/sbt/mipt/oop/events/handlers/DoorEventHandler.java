@@ -1,7 +1,8 @@
 package ru.sbt.mipt.oop.events.handlers;
 
 import ru.sbt.mipt.oop.components.*;
-import ru.sbt.mipt.oop.events.SensorEvent;
+import ru.sbt.mipt.oop.events.types.Event;
+import ru.sbt.mipt.oop.events.types.SensorEvent;
 
 public class DoorEventHandler implements EventHandler {
     private final SmartHome smartHome;
@@ -11,13 +12,16 @@ public class DoorEventHandler implements EventHandler {
     }
 
     @Override
-    public void handleEvent(SensorEvent event) {
+    public void handleEvent(Event event) {
+        if (!(event instanceof SensorEvent)) return;
+
+        SensorEvent sensorEvent = (SensorEvent) event;
         switch (event.getType()) {
             case DOOR_OPEN:
-                toggleDoors(event.getObjectId(), true);
+                toggleDoors(sensorEvent.getObjectId(), true);
                 break;
             case DOOR_CLOSED:
-                toggleDoors(event.getObjectId(), false);
+                toggleDoors(sensorEvent.getObjectId(), false);
                 break;
         }
     }

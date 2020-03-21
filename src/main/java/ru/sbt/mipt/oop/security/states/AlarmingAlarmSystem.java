@@ -12,12 +12,12 @@ public class AlarmingAlarmSystem implements AlarmSystem {
     }
 
     @Override
-    public void activate(String password) {
+    public void activate(String code) {
         // do nothing
     }
 
     @Override
-    public void deactivate(String password) {
+    public void deactivate(String code) {
         // do nothing
     }
 

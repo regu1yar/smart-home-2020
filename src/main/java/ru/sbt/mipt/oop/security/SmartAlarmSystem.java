@@ -6,13 +6,13 @@ public class SmartAlarmSystem implements AlarmSystem {
     private AlarmSystem state = new DeactivatedAlarmSystem(this);
 
     @Override
-    public void activate(String password) {
-        state.activate(password);
+    public void activate(String code) {
+        state.activate(code);
     }
 
     @Override
-    public void deactivate(String password) {
-        state.deactivate(password);
+    public void deactivate(String code) {
+        state.deactivate(code);
     }
 
     @Override

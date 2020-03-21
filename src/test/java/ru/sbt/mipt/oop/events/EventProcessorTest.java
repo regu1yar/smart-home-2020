@@ -6,13 +6,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import ru.sbt.mipt.oop.events.types.SensorEvent;
 import ru.sbt.mipt.oop.events.handlers.EventHandler;
 import ru.sbt.mipt.oop.events.producers.EventProducer;
 
 import java.util.Collections;
 
 import static org.mockito.Mockito.*;
-import static ru.sbt.mipt.oop.events.SensorEventType.*;
+import static ru.sbt.mipt.oop.events.types.EventType.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventProcessorTest {

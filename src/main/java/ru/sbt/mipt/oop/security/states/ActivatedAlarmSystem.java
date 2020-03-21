@@ -6,21 +6,21 @@ import ru.sbt.mipt.oop.security.SmartAlarmSystem;
 
 public class ActivatedAlarmSystem implements AlarmSystem {
     private final SmartAlarmSystem alarmSystem;
-    private final String password;
+    private final String code;
 
-    public ActivatedAlarmSystem(SmartAlarmSystem alarmSystem, String password) {
+    public ActivatedAlarmSystem(SmartAlarmSystem alarmSystem, String code) {
         this.alarmSystem = alarmSystem;
-        this.password = password;
+        this.code = code;
     }
 
     @Override
-    public void activate(String password) {
+    public void activate(String code) {
         // do nothing
     }
 
     @Override
-    public void deactivate(String password) {
-        if (password.equals(this.password)) {
+    public void deactivate(String code) {
+        if (code.equals(this.code)) {
             alarmSystem.changeState(new DeactivatedAlarmSystem(alarmSystem));
         } else {
             alarmSystem.changeState(new AlarmingAlarmSystem(alarmSystem));

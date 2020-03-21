@@ -12,12 +12,12 @@ public class DeactivatedAlarmSystem implements AlarmSystem {
     }
 
     @Override
-    public void activate(String password) {
-        alarmSystem.changeState(new ActivatedAlarmSystem(alarmSystem, password));
+    public void activate(String code) {
+        alarmSystem.changeState(new ActivatedAlarmSystem(alarmSystem, code));
     }
 
     @Override
-    public void deactivate(String password) {
+    public void deactivate(String code) {
         // do nothing
     }
 
