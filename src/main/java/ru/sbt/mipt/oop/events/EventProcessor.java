@@ -1,7 +1,6 @@
 package ru.sbt.mipt.oop.events;
 
 import ru.sbt.mipt.oop.events.types.Event;
-import ru.sbt.mipt.oop.events.types.SensorEvent;
 import ru.sbt.mipt.oop.events.handling.EventHandler;
 import ru.sbt.mipt.oop.events.producing.EventProducer;
 

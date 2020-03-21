@@ -3,9 +3,7 @@ package ru.sbt.mipt.oop.events.handling.decorators;
 import ru.sbt.mipt.oop.events.handling.EventHandler;
 import ru.sbt.mipt.oop.events.handling.HandlerDecorator;
 import ru.sbt.mipt.oop.events.types.Event;
-import ru.sbt.mipt.oop.notifications.Notifier;
 import ru.sbt.mipt.oop.security.AlarmSystem;
-import ru.sbt.mipt.oop.security.AlarmSystemState;
 
 import static ru.sbt.mipt.oop.security.AlarmSystemState.*;
 
