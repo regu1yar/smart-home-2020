@@ -56,6 +56,6 @@ public class SmartAlarmSystemTest {
         alarmSystem.activate("password");
         alarmSystem.alarm();
 
-        assertTrue(alarmSystem.getState() instanceof AlarmingAlarmSystem);
+        assertTrue(alarmSystem.getState() instanceof AlarmingAlarmSystem    );
     }
 }

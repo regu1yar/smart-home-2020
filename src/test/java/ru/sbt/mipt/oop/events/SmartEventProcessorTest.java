@@ -16,16 +16,16 @@ import static org.mockito.Mockito.*;
 import static ru.sbt.mipt.oop.events.types.EventType.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EventProcessorTest {
+public class SmartEventProcessorTest {
     @Mock private EventProducer eventProducer;
     @Mock private EventHandler handler;
 
-    private EventProcessor eventProcessor;
+    private SmartEventProcessor eventProcessor;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        eventProcessor = new EventProcessor(Collections.singletonList(handler), eventProducer);
+        eventProcessor = new SmartEventProcessor(Collections.singletonList(handler), eventProducer);
     }
 
     @Test
