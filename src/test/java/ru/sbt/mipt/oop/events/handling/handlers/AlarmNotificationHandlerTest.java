@@ -8,14 +8,16 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ru.sbt.mipt.oop.events.types.Event;
 import ru.sbt.mipt.oop.events.types.EventType;
 import ru.sbt.mipt.oop.notifications.Notifier;
-import ru.sbt.mipt.oop.security.AlarmSystem;
+import ru.sbt.mipt.oop.security.ActivatedAlarmSystem;
+import ru.sbt.mipt.oop.security.AlarmingAlarmSystem;
+import ru.sbt.mipt.oop.security.DeactivatedAlarmSystem;
+import ru.sbt.mipt.oop.security.SmartAlarmSystem;
 
 import static org.mockito.Mockito.*;
-import static ru.sbt.mipt.oop.security.AlarmSystemState.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AlarmNotificationHandlerTest {
-    @Mock private AlarmSystem alarmSystem;
+    @Mock private SmartAlarmSystem alarmSystem;
     @Mock private Notifier notifier;
     @Mock private Event event;
 
@@ -24,7 +26,7 @@ public class AlarmNotificationHandlerTest {
 
     @Test
     public void notifyIfAlarmSystemIsActivatedAndHandleSensorEvent() {
-        when(alarmSystem.getState()).thenReturn(ACTIVATED);
+        when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code"));
         when(event.getType()).thenReturn(EventType.LIGHT_ON);
 
         alarmNotificationHandler.handleEvent(event);
@@ -34,7 +36,7 @@ public class AlarmNotificationHandlerTest {
 
     @Test
     public void notifyIfAlarmSystemIsAlarmingAndHandleSensorEvent() {
-        when(alarmSystem.getState()).thenReturn(ALARMING);
+        when(alarmSystem.getState()).thenReturn(new AlarmingAlarmSystem(alarmSystem, "code"));
         when(event.getType()).thenReturn(EventType.LIGHT_ON);
 
         alarmNotificationHandler.handleEvent(event);
@@ -44,7 +46,7 @@ public class AlarmNotificationHandlerTest {
 
     @Test
     public void notTriggerIfAlarmSystemIsDeactivated() {
-        lenient().when(alarmSystem.getState()).thenReturn(DEACTIVATED);
+        lenient().when(alarmSystem.getState()).thenReturn(new DeactivatedAlarmSystem(alarmSystem));
 
         alarmNotificationHandler.handleEvent(event);
 
@@ -53,7 +55,7 @@ public class AlarmNotificationHandlerTest {
 
     @Test
     public void notTriggerIfHandleOtherEvent() {
-        lenient().when(alarmSystem.getState()).thenReturn(ACTIVATED);
+        lenient().when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code"));
         when(event.getType()).thenReturn(EventType.ALARM_DEACTIVATE);
 
         alarmNotificationHandler.handleEvent(event);

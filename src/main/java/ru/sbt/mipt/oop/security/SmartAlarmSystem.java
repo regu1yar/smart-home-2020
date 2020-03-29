@@ -1,9 +1,7 @@
 package ru.sbt.mipt.oop.security;
 
-import ru.sbt.mipt.oop.security.states.DeactivatedAlarmSystem;
-
 public class SmartAlarmSystem implements AlarmSystem {
-    private AlarmSystem state = new DeactivatedAlarmSystem(this);
+    private AlarmSystemState state = new DeactivatedAlarmSystem(this);
 
     @Override
     public void activate(String code) {
@@ -22,10 +20,10 @@ public class SmartAlarmSystem implements AlarmSystem {
 
     @Override
     public AlarmSystemState getState() {
-        return state.getState();
+        return state;
     }
 
-    public void changeState(AlarmSystem newState) {
+    void changeState(AlarmSystemState newState) {
         state = newState;
     }
 }

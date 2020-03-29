@@ -1,10 +1,6 @@
-package ru.sbt.mipt.oop.security.states;
+package ru.sbt.mipt.oop.security;
 
-import ru.sbt.mipt.oop.security.AlarmSystem;
-import ru.sbt.mipt.oop.security.AlarmSystemState;
-import ru.sbt.mipt.oop.security.SmartAlarmSystem;
-
-public class AlarmingAlarmSystem implements AlarmSystem {
+public class AlarmingAlarmSystem implements AlarmSystemState {
     private final SmartAlarmSystem alarmSystem;
     private final String code;
 
@@ -28,10 +24,5 @@ public class AlarmingAlarmSystem implements AlarmSystem {
     @Override
     public void alarm() {
         // do nothing
-    }
-
-    @Override
-    public AlarmSystemState getState() {
-        return AlarmSystemState.ALARMING;
     }
 }

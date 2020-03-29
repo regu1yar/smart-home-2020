@@ -8,15 +8,17 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ru.sbt.mipt.oop.events.handling.EventHandler;
 import ru.sbt.mipt.oop.events.types.Event;
 import ru.sbt.mipt.oop.events.types.EventType;
-import ru.sbt.mipt.oop.security.AlarmSystem;
+import ru.sbt.mipt.oop.security.ActivatedAlarmSystem;
+import ru.sbt.mipt.oop.security.AlarmingAlarmSystem;
+import ru.sbt.mipt.oop.security.DeactivatedAlarmSystem;
+import ru.sbt.mipt.oop.security.SmartAlarmSystem;
 
 import static org.mockito.Mockito.*;
-import static ru.sbt.mipt.oop.security.AlarmSystemState.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SecurityDecoratorTest {
     @Mock private EventHandler wrappeeHandler;
-    @Mock private AlarmSystem alarmSystem;
+    @Mock private SmartAlarmSystem alarmSystem;
     @Mock private Event event;
 
     @InjectMocks
@@ -24,7 +26,7 @@ public class SecurityDecoratorTest {
 
     @Test
     public void handleEventNormallyWhenAlarmSystemIsDeactivated() {
-        when(alarmSystem.getState()).thenReturn(DEACTIVATED);
+        when(alarmSystem.getState()).thenReturn(new DeactivatedAlarmSystem(alarmSystem));
         when(event.getType()).thenReturn(EventType.LIGHT_ON);
         
         decoratedHandler.handleEvent(event);
@@ -34,7 +36,7 @@ public class SecurityDecoratorTest {
 
     @Test
     public void stopHandlingAndAlarmWhenAlarmSystemIsActivated() {
-        when(alarmSystem.getState()).thenReturn(ACTIVATED);
+        when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code"));
         when(event.getType()).thenReturn(EventType.LIGHT_ON);
 
         decoratedHandler.handleEvent(event);
@@ -45,7 +47,7 @@ public class SecurityDecoratorTest {
 
     @Test
     public void notHandlingWhenAlarmSystemIsAlarming() {
-        when(alarmSystem.getState()).thenReturn(ALARMING);
+        when(alarmSystem.getState()).thenReturn(new AlarmingAlarmSystem(alarmSystem, "code"));
         when(event.getType()).thenReturn(EventType.LIGHT_ON);
 
         decoratedHandler.handleEvent(event);
@@ -55,7 +57,7 @@ public class SecurityDecoratorTest {
 
     @Test
     public void notTriggersByOtherEvents() {
-        lenient().when(alarmSystem.getState()).thenReturn(ACTIVATED);
+        lenient().when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code"));
         when(event.getType()).thenReturn(EventType.ALARM_DEACTIVATE);
 
         decoratedHandler.handleEvent(event);

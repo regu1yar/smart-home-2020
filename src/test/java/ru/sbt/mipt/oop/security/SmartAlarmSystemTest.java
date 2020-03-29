@@ -3,8 +3,7 @@ package ru.sbt.mipt.oop.security;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static ru.sbt.mipt.oop.security.AlarmSystemState.*;
+import static org.junit.Assert.assertTrue;
 
 public class SmartAlarmSystemTest {
     private AlarmSystem alarmSystem;
@@ -16,14 +15,14 @@ public class SmartAlarmSystemTest {
 
     @Test
     public void initiallyDeactivated() {
-        assertEquals(DEACTIVATED, alarmSystem.getState());
+        assertTrue(alarmSystem.getState() instanceof DeactivatedAlarmSystem);
     }
 
     @Test
     public void activatedAfterActivate() {
         alarmSystem.activate("password");
 
-        assertEquals(ACTIVATED, alarmSystem.getState());
+        assertTrue(alarmSystem.getState() instanceof ActivatedAlarmSystem);
     }
 
     @Test
@@ -32,7 +31,7 @@ public class SmartAlarmSystemTest {
         alarmSystem.activate(password);
         alarmSystem.deactivate(password);
 
-        assertEquals(DEACTIVATED, alarmSystem.getState());
+        assertTrue(alarmSystem.getState() instanceof DeactivatedAlarmSystem);
     }
 
     @Test
@@ -42,14 +41,14 @@ public class SmartAlarmSystemTest {
         alarmSystem.activate(password);
         alarmSystem.deactivate(wrongPassword);
 
-        assertEquals(ALARMING, alarmSystem.getState());
+        assertTrue(alarmSystem.getState() instanceof AlarmingAlarmSystem);
     }
 
     @Test
     public void unableToTriggerAlarmManuallyFromDeactivatedState() {
         alarmSystem.alarm();
 
-        assertEquals(DEACTIVATED, alarmSystem.getState());
+        assertTrue(alarmSystem.getState() instanceof DeactivatedAlarmSystem);
     }
 
     @Test
@@ -57,6 +56,6 @@ public class SmartAlarmSystemTest {
         alarmSystem.activate("password");
         alarmSystem.alarm();
 
-        assertEquals(ALARMING, alarmSystem.getState());
+        assertTrue(alarmSystem.getState() instanceof AlarmingAlarmSystem);
     }
 }

@@ -8,7 +8,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import ru.sbt.mipt.oop.events.types.AlarmSystemEvent;
 import ru.sbt.mipt.oop.events.types.EventType;
 import ru.sbt.mipt.oop.security.AlarmSystem;
-
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
