@@ -11,10 +11,12 @@ public class RandomEventProducer implements EventProducer {
     @Override
     public Event getNextEvent() {
         if (Math.random() < 0.05) return null; // null means end of event stream
-        if (Math.random() <= Integer.valueOf(getSensorEvents().size()).doubleValue() / EventType.values().length) {
-            return getSensorEvent();
-        } else {
+        if (Math.random() > Integer.valueOf(getAlarmSystemEvents().size()).doubleValue() / EventType.values().length) {
             return getAlarmSystemEvent();
+        } else if (Math.random() > Integer.valueOf(getLightEvents().size()).doubleValue() / EventType.values().length) {
+            return getLightEvent();
+        } else {
+            return getDoorEvent();
         }
     }
 
@@ -24,8 +26,14 @@ public class RandomEventProducer implements EventProducer {
         return new AlarmSystemEvent(eventType, code);
     }
 
-    private Event getSensorEvent() {
-        EventType eventType = (EventType) getSensorEvents().toArray() [(int) (getSensorEvents().size() * Math.random())];
+    private Event getLightEvent() {
+        EventType eventType = (EventType) getLightEvents().toArray() [(int) (getLightEvents().size() * Math.random())];
+        String objectId = "" + ((int) (10 * Math.random()));
+        return new SensorEvent(eventType, objectId);
+    }
+
+    private Event getDoorEvent() {
+        EventType eventType = (EventType) getDoorEvents().toArray() [(int) (getDoorEvents().size() * Math.random())];
         String objectId = "" + ((int) (10 * Math.random()));
         return new SensorEvent(eventType, objectId);
     }
