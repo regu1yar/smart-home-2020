@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import ru.sbt.mipt.oop.smarthome.commands.CommandSender;
 import ru.sbt.mipt.oop.smarthome.components.SmartHome;
 import ru.sbt.mipt.oop.smarthome.events.EventProcessor;
-import ru.sbt.mipt.oop.smarthome.events.SensorEventsManagerAdaptor;
+import ru.sbt.mipt.oop.smarthome.events.SensorEventsManagerAdapter;
 import ru.sbt.mipt.oop.smarthome.events.handling.decorators.SecurityDecorator;
 import ru.sbt.mipt.oop.smarthome.events.handling.handlers.*;
 import ru.sbt.mipt.oop.smarthome.notifications.StubSmsNotifier;
@@ -34,7 +34,7 @@ public class ApplicationConfiguration {
         AlarmSystem alarmSystem = alarmSystem();
 
         SensorEventsManager sensorEventsManager = new SensorEventsManager();
-        EventProcessor eventProcessor = new SensorEventsManagerAdaptor(sensorEventsManager);
+        EventProcessor eventProcessor = new SensorEventsManagerAdapter(sensorEventsManager);
         eventProcessor.registerHandler(new SecurityDecorator(new DoorEventHandler(smartHome), alarmSystem));
         eventProcessor.registerHandler(new SecurityDecorator(new LightEventHandler(smartHome), alarmSystem));
         eventProcessor.registerHandler(new SecurityDecorator(

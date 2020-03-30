@@ -4,10 +4,10 @@ import com.coolcompany.smarthome.events.SensorEventsManager;
 import ru.sbt.mipt.oop.smarthome.events.handling.EventHandler;
 import ru.sbt.mipt.oop.smarthome.events.handling.EventHandlerAdapter;
 
-public class SensorEventsManagerAdaptor implements EventProcessor {
+public class SensorEventsManagerAdapter implements EventProcessor {
     private final SensorEventsManager adapteeEventsManager;
 
-    public SensorEventsManagerAdaptor(SensorEventsManager eventsManager) {
+    public SensorEventsManagerAdapter(SensorEventsManager eventsManager) {
         this.adapteeEventsManager = eventsManager;
     }
 

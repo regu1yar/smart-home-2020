@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class SensorEventsManagerAdaptorTest {
+public class SensorEventsManagerAdapterTest {
     @Mock private SensorEventsManager adapteeManager;
     @Mock private EventHandler eventHandler;
 
@@ -20,7 +20,7 @@ public class SensorEventsManagerAdaptorTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        managerAdapter = new SensorEventsManagerAdaptor(adapteeManager);
+        managerAdapter = new SensorEventsManagerAdapter(adapteeManager);
     }
 
     @Test
