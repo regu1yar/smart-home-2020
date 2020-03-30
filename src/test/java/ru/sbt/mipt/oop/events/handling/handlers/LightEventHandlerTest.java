@@ -1,17 +1,18 @@
-package ru.sbt.mipt.oop.events.handlers;
+package ru.sbt.mipt.oop.events.handling.handlers;
 
 import org.junit.Before;
 import org.junit.Test;
 import ru.sbt.mipt.oop.components.Light;
 import ru.sbt.mipt.oop.components.Room;
 import ru.sbt.mipt.oop.components.SmartHome;
-import ru.sbt.mipt.oop.events.SensorEvent;
+import ru.sbt.mipt.oop.events.handling.EventHandler;
+import ru.sbt.mipt.oop.events.types.SensorEvent;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.*;
-import static ru.sbt.mipt.oop.events.SensorEventType.*;
+import static ru.sbt.mipt.oop.events.types.EventType.*;
 
 public class LightEventHandlerTest {
     private Light hallLight0 = new Light("0", false);

@@ -6,13 +6,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import ru.sbt.mipt.oop.events.handlers.EventHandler;
-import ru.sbt.mipt.oop.events.producers.EventProducer;
+import ru.sbt.mipt.oop.events.types.SensorEvent;
+import ru.sbt.mipt.oop.events.handling.EventHandler;
+import ru.sbt.mipt.oop.events.producing.EventProducer;
 
 import java.util.Collections;
 
 import static org.mockito.Mockito.*;
-import static ru.sbt.mipt.oop.events.SensorEventType.*;
+import static ru.sbt.mipt.oop.events.types.EventType.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventProcessorTest {
@@ -29,7 +30,7 @@ public class EventProcessorTest {
 
     @Test
     public void getNextEventTimesWhileProcessing() {
-        when(eventProducer.getNextSensorEvent()).thenReturn(
+        when(eventProducer.getNextEvent()).thenReturn(
                 new SensorEvent(DOOR_OPEN, "0"),
                 new SensorEvent(DOOR_CLOSED, "1"),
                 new SensorEvent(LIGHT_OFF, "2"),
@@ -39,7 +40,7 @@ public class EventProcessorTest {
 
         eventProcessor.startProcessing();
 
-        verify(eventProducer, times(5)).getNextSensorEvent();
+        verify(eventProducer, times(5)).getNextEvent();
         verify(handler, times(4)).handleEvent(any());
     }
 }
