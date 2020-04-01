@@ -24,7 +24,7 @@ public class SecurityDecoratorTest {
 
     @Test
     public void handleEventNormallyWhenAlarmSystemIsDeactivated() {
-        when(alarmSystem.getState()).thenReturn(new DeactivatedAlarmSystem(alarmSystem));
+        when(alarmSystem.getState()).thenReturn(new DeactivatedAlarmSystem(alarmSystem, "defaultCode"));
         Event event = new SensorEvent(EventType.LIGHT_ON, "0");
 
         decoratedHandler.handleEvent(event);
@@ -34,7 +34,7 @@ public class SecurityDecoratorTest {
 
     @Test
     public void stopHandlingAndAlarmWhenAlarmSystemIsActivated() {
-        when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code"));
+        when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code", "defaultCode"));
         Event event = new SensorEvent(EventType.LIGHT_ON, "0");
 
         decoratedHandler.handleEvent(event);
@@ -45,7 +45,7 @@ public class SecurityDecoratorTest {
 
     @Test
     public void notHandlingWhenAlarmSystemIsAlarming() {
-        when(alarmSystem.getState()).thenReturn(new AlarmingAlarmSystem(alarmSystem, "code"));
+        when(alarmSystem.getState()).thenReturn(new AlarmingAlarmSystem(alarmSystem, "code", "defaultCode"));
         Event event = new SensorEvent(EventType.LIGHT_ON, "0");
 
         decoratedHandler.handleEvent(event);
@@ -55,7 +55,7 @@ public class SecurityDecoratorTest {
 
     @Test
     public void notTriggersByOtherEvents() {
-        lenient().when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code"));
+        lenient().when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code", "defaultCode"));
         Event event = new AlarmSystemEvent(EventType.ALARM_DEACTIVATE, "code");
 
         decoratedHandler.handleEvent(event);

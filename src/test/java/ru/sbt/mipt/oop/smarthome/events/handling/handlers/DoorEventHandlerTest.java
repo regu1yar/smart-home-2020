@@ -17,13 +17,12 @@ import static ru.sbt.mipt.oop.smarthome.events.types.EventType.*;
 public class DoorEventHandlerTest {
     private Door bedroomDoor0 = new Door("0", true);
     private Door hallDoor1 = new Door("1", false);
-    SmartHome smartHome;
 
     private EventHandler doorEventHandler;
 
     @Before
     public void setUp() {
-        smartHome = new SmartHome(Arrays.asList(
+        SmartHome smartHome = new SmartHome(Arrays.asList(
                 new Room(Collections.singletonList(hallDoor1), "hall"),
                 new Room(Collections.singletonList(bedroomDoor0), "bedroom")
         ));

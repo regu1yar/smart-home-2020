@@ -24,7 +24,7 @@ public class AlarmNotificationHandlerTest {
 
     @Test
     public void notifyIfAlarmSystemIsActivatedAndHandleSensorEvent() {
-        when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code"));
+        when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code", "defaultCode"));
         Event event = new SensorEvent(EventType.LIGHT_ON, "0");
 
         alarmNotificationHandler.handleEvent(event);
@@ -34,7 +34,7 @@ public class AlarmNotificationHandlerTest {
 
     @Test
     public void notifyIfAlarmSystemIsAlarmingAndHandleSensorEvent() {
-        when(alarmSystem.getState()).thenReturn(new AlarmingAlarmSystem(alarmSystem, "code"));
+        when(alarmSystem.getState()).thenReturn(new AlarmingAlarmSystem(alarmSystem, "code", "defaultCode"));
         Event event = new SensorEvent(EventType.LIGHT_ON, "0");
 
         alarmNotificationHandler.handleEvent(event);
@@ -44,7 +44,7 @@ public class AlarmNotificationHandlerTest {
 
     @Test
     public void notTriggerIfAlarmSystemIsDeactivated() {
-        lenient().when(alarmSystem.getState()).thenReturn(new DeactivatedAlarmSystem(alarmSystem));
+        lenient().when(alarmSystem.getState()).thenReturn(new DeactivatedAlarmSystem(alarmSystem, "defaultCode"));
         Event event = new SensorEvent(EventType.LIGHT_ON, "0");
 
         alarmNotificationHandler.handleEvent(event);
@@ -54,7 +54,7 @@ public class AlarmNotificationHandlerTest {
 
     @Test
     public void notTriggerIfHandleOtherEvent() {
-        lenient().when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code"));
+        lenient().when(alarmSystem.getState()).thenReturn(new ActivatedAlarmSystem(alarmSystem, "code", "defaultCode"));
         Event event = new AlarmSystemEvent(EventType.ALARM_DEACTIVATE, "code");
 
         alarmNotificationHandler.handleEvent(event);
