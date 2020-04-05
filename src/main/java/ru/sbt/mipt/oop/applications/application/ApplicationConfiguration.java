@@ -5,12 +5,15 @@ import com.coolcompany.smarthome.events.SensorEventsManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import rc.RemoteControlRegistry;
 import ru.sbt.mipt.oop.smarthome.commands.CommandSender;
 import ru.sbt.mipt.oop.smarthome.components.SmartHome;
 import ru.sbt.mipt.oop.smarthome.events.handling.EventHandlerAdapter;
 import ru.sbt.mipt.oop.smarthome.events.handling.decorators.SecurityDecorator;
 import ru.sbt.mipt.oop.smarthome.events.handling.handlers.*;
 import ru.sbt.mipt.oop.smarthome.notifications.StubSmsNotifier;
+import ru.sbt.mipt.oop.smarthome.remotecontrol.RemoteController;
+import ru.sbt.mipt.oop.smarthome.remotecontrol.commands.*;
 import ru.sbt.mipt.oop.smarthome.security.AlarmSystem;
 import ru.sbt.mipt.oop.smarthome.security.SmartAlarmSystem;
 import ru.sbt.mipt.oop.smarthome.serialization.SmartHomeDeserializer;
@@ -20,6 +23,8 @@ import java.util.Map;
 
 @Configuration
 public class ApplicationConfiguration {
+    private static final String REMOTE_CONTROL_ID = "0";
+
     @Bean
     SmartHome smartHome() {
         SmartHomeDeserializer deserializer = new SmartHomeJsonDeserializer("output.js");
@@ -68,5 +73,56 @@ public class ApplicationConfiguration {
         }
 
         return sensorEventsManager;
+    }
+
+    @Bean
+    Command activateAlarmSystemCommand() {
+        return new ActivateAlarmSystemCommand(alarmSystem());
+    }
+
+    @Bean
+    Command alarmCommand() {
+        return new AlarmCommand(alarmSystem());
+    }
+
+    @Bean
+    Command closeHallDoorCommand() {
+        return new CloseHallDoorCommand(smartHome());
+    }
+
+    @Bean
+    Command turnOffLightCommand() {
+        return new TurnOffLightCommand(smartHome());
+    }
+
+    @Bean
+    Command turnOnHallLightCommand() {
+        return new TurnOnHallLightCommand(smartHome());
+    }
+
+    @Bean
+    Command turnOnLightCommand() {
+        return new TurnOnLightCommand(smartHome());
+    }
+
+    @Bean
+    RemoteController remoteController() {
+        RemoteController remoteController = new RemoteController(REMOTE_CONTROL_ID);
+
+        remoteController.setCommand("A", activateAlarmSystemCommand());
+        remoteController.setCommand("B", alarmCommand());
+        remoteController.setCommand("1", closeHallDoorCommand());
+        remoteController.setCommand("2", turnOffLightCommand());
+        remoteController.setCommand("3", turnOnHallLightCommand());
+        remoteController.setCommand("4", turnOnLightCommand());
+
+        return remoteController;
+    }
+
+    @Bean
+    RemoteControlRegistry remoteControlRegistry() {
+        RemoteControlRegistry remoteControlRegistry = new RemoteControlRegistry();
+        remoteControlRegistry.registerRemoteControl(remoteController(), REMOTE_CONTROL_ID);
+        return remoteControlRegistry;
     }
 }
