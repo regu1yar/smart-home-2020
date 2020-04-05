@@ -1,6 +1,7 @@
 package ru.sbt.mipt.oop.smarthome.events.handling;
 
 import com.coolcompany.smarthome.events.CCSensorEvent;
+import ru.sbt.mipt.oop.smarthome.events.factories.*;
 import ru.sbt.mipt.oop.smarthome.events.types.Event;
 import ru.sbt.mipt.oop.smarthome.events.types.EventType;
 import ru.sbt.mipt.oop.smarthome.events.types.SensorEvent;
@@ -12,13 +13,13 @@ import static ru.sbt.mipt.oop.smarthome.events.types.EventType.*;
 public class EventHandlerAdapter implements com.coolcompany.smarthome.events.EventHandler {
     private final EventHandler adapteeHandler;
 
-    private static final Map<String, EventType> ccEventTypesToEventTypes = Map.of(
-            "LightIsOn", LIGHT_ON,
-            "LightIsOff", LIGHT_OFF,
-            "DoorIsOpen", DOOR_OPEN,
-            "DoorIsClosed", DOOR_CLOSED,
-            "DoorIsLocked", DOOR_LOCKED,
-            "DoorIsUnlocked", DOOR_UNLOCKED
+    private static final Map<String, SensorEventFactory> ccEventTypesToEventTypes = Map.of(
+            "LightIsOn", new LightOnEventFactory(),
+            "LightIsOff", new LightOffEventFactory(),
+            "DoorIsOpen", new DoorOpenEventFactory(),
+            "DoorIsClosed", new DoorClosedEventFactory(),
+            "DoorIsLocked", new DoorLockedEventFactory(),
+            "DoorIsUnlocked", new DoorUnlockedEventFactory()
     );
 
     public EventHandlerAdapter(EventHandler adapteeHandler) {
@@ -32,6 +33,6 @@ public class EventHandlerAdapter implements com.coolcompany.smarthome.events.Eve
     }
 
     private Event convertEvent(CCSensorEvent event) {
-        return new SensorEvent(ccEventTypesToEventTypes.get(event.getEventType()), event.getObjectId());
+        return ccEventTypesToEventTypes.get(event.getEventType()).createEvent(event.getObjectId());
     }
 }
