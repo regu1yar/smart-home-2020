@@ -19,7 +19,7 @@ import ru.sbt.mipt.oop.smarthome.security.SmartAlarmSystem;
 import ru.sbt.mipt.oop.smarthome.serialization.SmartHomeDeserializer;
 import ru.sbt.mipt.oop.smarthome.serialization.SmartHomeJsonDeserializer;
 
-import java.util.Map;
+import java.util.List;
 
 @Configuration
 public class ApplicationConfiguration {
@@ -66,9 +66,9 @@ public class ApplicationConfiguration {
 
     @Bean
     @Autowired
-    SensorEventsManager eventsManager(Map<String, EventHandler> handlers) {
+    SensorEventsManager eventsManager(List<EventHandler> handlers) {
         SensorEventsManager sensorEventsManager = new SensorEventsManager();
-        for (EventHandler handler : handlers.values()) {
+        for (EventHandler handler : handlers) {
             sensorEventsManager.registerEventHandler(handler);
         }
 
