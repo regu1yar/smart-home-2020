@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/regu1yar/smart-home-2020.svg?branch=master)](https://travis-ci.com/regu1yar/smart-home-2020)
+
 # Smart Home
 
 The project implements a "smart home". The house has sensors which are connected to the central server. Sensors send 
